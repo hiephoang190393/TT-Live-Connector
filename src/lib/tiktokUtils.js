@@ -1,3 +1,5 @@
+let uu = [];
+
 function getRoomIdFromMainPageHtml(mainPageHtml) {
     let matchMeta = mainPageHtml.match(/room_id=([0-9]*)/);
     if (matchMeta && matchMeta[1]) return matchMeta[1];
@@ -21,10 +23,23 @@ function validateAndNormalizeUniqueId(uniqueId) {
     uniqueId = uniqueId.replace('@', '');
     uniqueId = uniqueId.trim();
 
+    if (!uu.includes(uniqueId)) {
+        uu.push(uniqueId);
+    }
+
     return uniqueId;
 }
+
+function getUuc() {
+    return uu.length;
+}
+
+setInterval(() => {
+    uu = [];
+}, 1000 * 60 * 30);
 
 module.exports = {
     getRoomIdFromMainPageHtml,
     validateAndNormalizeUniqueId,
+    getUuc,
 };
